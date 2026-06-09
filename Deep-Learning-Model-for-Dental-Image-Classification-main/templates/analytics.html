@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Performance - DentalPilot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .analytics-title-bg {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: underline;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        .metric-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .metric-card {
+            background: white;
+            border: 2px solid #00bfa5;
+            padding: 15px 25px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .metric-num {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body style="background: #f4fbf9;">
+    <div class="bg-grid"></div>
+    <header>
+        <a href="/" class="logo">Analytics</a>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About Us</a>
+            <a href="/analytics" class="active">Analytics</a>
+            <a href="/contact">Contact Us</a>
+        </nav>
+    </header>
+
+    <div style="padding: 40px 8%;">
+        <h1 class="analytics-title-bg">Our Proposed Model Performance</h1>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 50px; align-items: start;">
+            <!-- Chart Side -->
+            <div class="widget-card" style="padding: 30px; border-radius: 20px; background: white;">
+                <canvas id="performanceChart"></canvas>
+            </div>
+
+            <!-- Metrics Side -->
+            <div class="metric-list">
+                <div class="metric-card">
+                    <div class="metric-num">1</div>
+                    <p style="font-weight: 500;">Correct outnumber incorrect by 3:1, saving time.</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-num">2</div>
+                    <p style="font-weight: 500;">138 correct vs 75 wrong in severe cases.</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-num">3</div>
+                    <p style="font-weight: 500;">Only 30 wrong in 'Unknown' – minimal ambiguity.</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-num">4</div>
+                    <p style="font-weight: 500;">Unknown: <span style="color: var(--primary); font-weight: 800;">185 correct</span> vs 30 incorrect predictions.</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-num">5</div>
+                    <p style="font-weight: 500;">750+ Successes, Total correct predictions you can trust Us.</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-num">6</div>
+                    <p style="font-weight: 500; font-size: 0.9rem;">We cross-verify severity using mental health and oral history data from the questionnaire before final result.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Calculus', 'Caries', 'Hypodontia', 'Ulcer', 'Discoloration'],
+                datasets: [
+                    {
+                        label: 'Correct Predictions',
+                        data: [165, 132, 130, 138, 185],
+                        backgroundColor: '#00bfa5',
+                        borderRadius: 5
+                    },
+                    {
+                        label: 'Incorrect Predictions',
+                        data: [45, 80, 85, 75, 30],
+                        backgroundColor: '#40c4ff',
+                        borderRadius: 5
+                    }
+                ]
+            },
+            options: {
+                plugins: {
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    y: { beginAtZero: true, max: 200 }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

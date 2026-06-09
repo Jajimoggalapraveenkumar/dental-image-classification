@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result - DentalPilot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { background: #f4fbf9; margin: 0; font-family: 'Outfit', sans-serif; }
+        .result-container { max-width: 800px; margin: 50px auto; padding: 0 20px; }
+        
+        .result-card {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 191, 165, 0.1);
+            text-align: center;
+        }
+
+        .chart-container {
+            width: 250px;
+            height: 250px;
+            margin: 30px auto;
+            position: relative;
+        }
+        .chart-center-text {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .breakdown-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid #e0f2f1;
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .severity-tag {
+            background: #ff7675;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #f0f7f7;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #fab1a0, #ff7675);
+            border-radius: 5px;
+        }
+
+        .btn-dashboard {
+            background: var(--primary);
+            color: white;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 30px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <div class="result-card">
+            <h4 style="color: #636e72; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Severity Distribution</h4>
+            
+            <div class="chart-container">
+                <canvas id="severityChart"></canvas>
+                <div class="chart-center-text">
+                    <p style="margin: 0; font-size: 0.8rem; color: #636e72;">1 Area</p>
+                    <p style="margin: 0; font-weight: 800; color: #00796b;">Analyzed</p>
+                </div>
+            </div>
+
+            <div class="breakdown-card">
+                <p style="color: #636e72; font-size: 0.7rem; text-transform: uppercase;">Area Breakdown</p>
+                <h3 style="margin: 10px 0;">Primary Scan Result</h3>
+                <span class="severity-tag" id="severityTag">{{ msg }}</span>
+                
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
+                    <span>Confidence</span>
+                    <span id="confidenceText">{{ confidence }}%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ confidence }}%;"></div>
+                </div>
+            </div>
+
+            <button onclick="window.location.href='/dashboard'" class="btn-dashboard">
+                Continue to Dashboard <span>→</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('severityChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Detected'],
+                datasets: [{
+                    data: [100],
+                    backgroundColor: ['#ff7675'],
+                    borderWidth: 0,
+                    cutout: '85%'
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // Set colors based on severity
+        const severity = "{{ msg }}".toLowerCase();
+        const tag = document.getElementById('severityTag');
+        if (severity.includes('healthy') || severity.includes('clean')) {
+            tag.style.background = '#55efc4';
+        } else if (severity.includes('mild')) {
+            tag.style.background = '#ffeaa7';
+            tag.style.color = '#d35400';
+        }
+    </script>
+</body>
+</html>

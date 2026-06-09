@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Results - DentalPilot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    
+    <div style="text-align: center; padding: 50px 8%;">
+        <h1 style="font-size: 3rem; margin-bottom: 5px;">Analysis Overview</h1>
+        <p style="color: var(--text-light); font-size: 1.2rem;">Here is what our AI detected from your dental scan.</p>
+
+        <div class="severity-card" style="background: white; padding: 30px; border-radius: 20px; box-shadow: var(--shadow); max-width: 500px; margin: 30px auto; border: 2px solid #ff7043;">
+            <p style="font-weight: 700; color: #ff7043; text-transform: uppercase; letter-spacing: 1px;">Overall Concern Level</p>
+            <h2 style="font-size: 2.5rem; margin: 10px 0; font-family: 'Playfair Display', serif;">Moderate</h2>
+            <div style="background: #fff3e0; color: #e65100; padding: 5px 15px; border-radius: 15px; display: inline-block; font-weight: 600;">1 Area Assessed</div>
+        </div>
+
+        <div class="result-card">
+            <h3 style="text-align: left; font-weight: 700; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 25px;">SEVERITY DISTRIBUTION</h3>
+            <div class="chart-container">
+                <canvas id="severityChart"></canvas>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                <span style="display: flex; align-items: center; gap: 8px;"><span style="width: 12px; height: 12px; background: #ff7043; border-radius: 50%;"></span> Moderate (1)</span>
+            </div>
+        </div>
+
+        <div class="result-card" style="text-align: left;">
+            <h3 style="font-weight: 700; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 25px;">AREA BREAKDOWN</h3>
+            <div style="background: #fdfdfd; border: 1px solid #eee; padding: 20px; border-radius: 12px; margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h4 style="font-size: 1.2rem;">Upper Right Quad</h4>
+                    <span style="background: #ff7043; color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; font-size: 0.8rem;">Moderate</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <span style="color: var(--text-light); font-size: 0.9rem;">Confidence</span>
+                    <div style="flex: 1; height: 8px; background: #eee; border-radius: 4px; overflow: hidden;">
+                        <div style="width: 88.2%; height: 100%; background: #ff7043;"></div>
+                    </div>
+                    <span style="font-weight: 700; color: var(--text-dark);">88.2%</span>
+                </div>
+            </div>
+
+            <button onclick="window.location.href='/login'" class="btn btn-primary" style="width: 100%; padding: 18px; border-radius: 12px; font-size: 1.1rem;">Continue to Dashboard &nbsp; →</button>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('severityChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Moderate'],
+                datasets: [{
+                    data: [1],
+                    backgroundColor: ['#ff7043'],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                cutout: '75%',
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

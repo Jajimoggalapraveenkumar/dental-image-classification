@@ -1,0 +1,23 @@
+# Ignore zip file
+Deep-Learning-Model-for-Dental-Image-Classification-main.zip
+*.zip
+
+# Ignore large model files
+*.h5
+*.keras
+*.pkl
+*.sqlite3
+history.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# OS files
+.DS_Store
+Thumbs.db

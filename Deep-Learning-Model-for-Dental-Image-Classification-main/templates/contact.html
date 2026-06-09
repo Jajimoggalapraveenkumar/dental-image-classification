@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - DentalPilot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playball&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        :root {
+            --primary: #0d9488;
+            --primary-light: #f0fdfa;
+            --primary-dark: #0f766e;
+            --bg: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px 8%;
+            align-items: flex-start;
+        }
+        .team-title {
+            font-size: 2.2rem;
+            color: var(--primary);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+        .member-row {
+            background: white;
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            width: 90%;
+        }
+        .member-num {
+            width: 32px;
+            height: 32px;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .member-name {
+            font-family: 'Playball', cursive;
+            font-size: 1.8rem;
+            color: #00796b;
+        }
+        .floating-form {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.05);
+            border: 1px solid var(--border-color);
+        }
+        .form-label {
+            display: block;
+            color: var(--text-main);
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-family: inherit;
+            background: #f8fafc;
+            outline: none;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        .form-input:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.08);
+        }
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.15);
+        }
+        .btn-submit:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(13, 148, 136, 0.25);
+        }
+    </style>
+</head>
+<body style="background: var(--bg); font-family: 'Plus Jakarta Sans', sans-serif;">
+    <header style="padding: 20px 8%; background: white; border-bottom: 1px solid var(--border-color);">
+        <a href="/" class="logo" style="font-weight:700; font-size:1.4rem; color: var(--text-main); text-decoration:none;">DentalPilot</a>
+        <nav>
+            <a href="/" style="font-weight: 600; font-size:0.95rem; text-decoration:none; color: var(--text-muted);">Home</a>
+            <a href="/about" style="font-weight: 600; font-size:0.95rem; text-decoration:none; color: var(--text-muted); margin-left: 24px;">About Us</a>
+            <a href="/analytics" style="font-weight: 600; font-size:0.95rem; text-decoration:none; color: var(--text-muted); margin-left: 24px;">Analytics</a>
+            <a href="/contact" class="active" style="font-weight: 600; font-size:0.95rem; text-decoration:none; color: var(--primary); margin-left: 24px; border-bottom: 2px solid var(--primary); padding-bottom: 4px;">Contact Us</a>
+        </nav>
+    </header>
+ 
+    <div class="contact-layout">
+        <!-- Team Left -->
+        <div>
+            <h1 class="team-title">We Are Behind<br>The Code</h1>
+            <p style="color: var(--text-muted); margin-bottom: 30px; line-height: 1.5; font-size: 0.9rem;">
+                We are waiting to hear from you. Whether you have questions, feedback, or just want to say hello, feel free to reach out to us!
+            </p>
+            
+            <div class="member-row">
+                <div class="member-num">1</div>
+                <span class="member-name">Praveen Kumar</span>
+            </div>
+            <div class="member-row">
+                <div class="member-num">2</div>
+                <span class="member-name">Aparna Devi</span>
+            </div>
+            <div class="member-row">
+                <div class="member-num">3</div>
+                <span class="member-name">Jayaram</span>
+            </div>
+            <div class="member-row">
+                <div class="member-num">4</div>
+                <span class="member-name">Vineeth</span>
+            </div>
+            <div class="member-row">
+                <div class="member-num">5</div>
+                <span class="member-name">Kishore</span>
+            </div>
+            <div class="member-row">
+                <div class="member-num">6</div>
+                <span class="member-name">Tanushka</span>
+            </div>
+        </div>
+ 
+        <!-- Form Right -->
+        <div class="floating-form">
+            <h2 style="color: var(--text-main); margin-bottom: 20px; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em;">Contact Us By This Form</h2>
+            
+            {% if success %}
+            <div style="background: var(--primary-light); color: var(--primary-dark); padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 0.85rem; text-align: center; border: 1px solid #cce8e1; font-weight: 600;">
+                ✓ Message sent successfully! We will get back to you soon.
+            </div>
+            {% endif %}
+            
+            <form action="/contact" method="post">
+                <label class="form-label">Your Email</label>
+                <input type="email" name="email" class="form-input" placeholder="Enter your email" required>
+                
+                <label class="form-label">What We Call You</label>
+                <input type="text" name="name" class="form-input" placeholder="Enter your name" required>
+                
+                <label class="form-label">Subject</label>
+                <input type="text" name="subject" class="form-input" placeholder="Your subject" required>
+                
+                <label class="form-label">Message</label>
+                <textarea name="message" class="form-input" style="height: 100px; resize: none;" placeholder="Message here..." required></textarea>
+                
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

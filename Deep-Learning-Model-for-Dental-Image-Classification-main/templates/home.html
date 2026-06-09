@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentalPilot - AI Powered Dental Care</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        :root {
+            --primary: #00bfa5;
+        }
+
+        body {
+            background-color: #f4fbf9;
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        header {
+            padding: 30px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #000;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 4px;
+            background: var(--primary);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 700;
+            margin-left: 40px;
+            font-size: 1.1rem;
+        }
+
+        nav a.active {
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 5px;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            padding: 40px 8%;
+            min-height: 70vh;
+        }
+
+        .hero-content { flex: 1.2; }
+        .hero-img { flex: 1; text-align: right; }
+        .hero-img img { width: 100%; max-width: 500px; }
+
+        .welcome-to {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            margin-bottom: 0;
+        }
+
+        .main-title {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-top: -10px;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: #636e72;
+            max-width: 550px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .btn-group { display: flex; gap: 20px; }
+        .btn-solid {
+            background: var(--primary);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 800;
+        }
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 15px 35px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        /* EXACT FOOTER FROM SCREENSHOT */
+        .footer-section {
+            background: linear-gradient(to right, #004d40, #00bfa5);
+            padding: 50px 8% 30px 8%;
+            color: white;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            align-items: center;
+        }
+
+        .footer-left h3 { font-size: 1.5rem; margin-bottom: 5px; }
+        .footer-left h4 { font-size: 1rem; margin-bottom: 15px; opacity: 0.9; }
+        .footer-left p { font-size: 0.9rem; line-height: 1.5; opacity: 0.8; max-width: 450px; }
+
+        .footer-center {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+        .footer-center a { color: white; text-decoration: none; }
+
+        .footer-right {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        .social-ball {
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .social-ball:hover {
+            background: white;
+            color: #004d40;
+            transform: translateY(-2px);
+        }
+        .social-ball svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .copyright-bar {
+            background: #f4fbf9;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #636e72;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">DentalDetection</a>
+        <nav>
+            <a href="/" class="active">Home</a>
+            <a href="/about">About Us</a>
+            <a href="/analytics">Analytics</a>
+            <a href="/contact">Contact Us</a>
+        </nav>
+    </header>
+
+    <main class="hero">
+        <div class="hero-content">
+            <p class="welcome-to">Welcome To</p>
+            <h1 class="main-title">Dental Pilot</h1>
+            <p class="description">
+                "DentalPilot is an AI-powered dentistry platform that guides you from dental assessment to personalized treatment, delivering intelligent severity analysis and adaptive daily care plans for safe and consistent oral health results."
+            </p>
+            <div class="btn-group">
+                <a href="/login" class="btn-solid">GO TO DASHBOARD</a>
+                <a href="/contact" class="btn-outline">JOIN WITH US</a>
+            </div>
+        </div>
+        <div class="hero-img">
+            <img src="{{ url_for('static', filename='media/doctor.png') }}" alt="Doctor">
+        </div>
+    </main>
+
+    <footer class="footer-section">
+        <div class="footer-left">
+            <h3>Dental Detection</h3>
+            <h4>Thanks For Exploring Us</h4>
+            <p>Leveraging advanced AI technology to provide accurate dental analysis, personalized insights, and smarter healthcare decisions for healthier, clearer skin.</p>
+        </div>
+        
+        <div class="footer-center">
+            <a href="/register">Register</a>
+            <a href="/login">Login</a>
+        </div>
+
+        <div class="footer-right">
+            <a href="https://instagram.com" target="_blank" class="social-ball" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" class="social-ball" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+            <a href="https://x.com" target="_blank" class="social-ball" aria-label="X (Twitter)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4l11.733 16h4.267l-11.733 -16z"></path><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg>
+            </a>
+            <a href="https://youtube.com" target="_blank" class="social-ball" aria-label="YouTube">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+            </a>
+        </div>
+    </footer>
+
+    <div class="copyright-bar">
+        &copy; 2026 Dental Detection. All rights reserved.
+    </div>
+</body>
+</html>

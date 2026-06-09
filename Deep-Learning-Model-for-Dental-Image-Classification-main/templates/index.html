@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Scans - DentalPilot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body { background: #f4fbf9; margin: 0; font-family: 'Outfit', sans-serif; }
+        .upload-container { max-width: 1000px; margin: 40px auto; padding: 0 20px; text-align: center; }
+        
+        .upload-header h1 { font-size: 2.5rem; font-weight: 800; color: #2d3436; margin-bottom: 10px; }
+        .upload-header p { color: #636e72; margin-bottom: 40px; }
+
+        .upload-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            box-shadow: 0 10px 30px rgba(0, 191, 165, 0.1);
+            margin-bottom: 30px;
+            border: 1px solid #e0f2f1;
+        }
+
+        .example-side { background: #f9fdfd; padding: 0; position: relative; }
+        .example-side img { width: 100%; height: 250px; object-fit: cover; }
+        .tag { position: absolute; top: 15px; left: 15px; background: var(--primary); color: white; padding: 5px 15px; border-radius: 5px; font-size: 0.7rem; font-weight: 800; }
+        .area-label { position: absolute; bottom: 15px; left: 15px; color: white; font-weight: 800; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+
+        .upload-side { padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .upload-box {
+            width: 100%;
+            height: 150px;
+            border: 2px dashed #e0f2f1;
+            border-radius: 15px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.3s;
+        }
+        .upload-box:hover { border-color: var(--primary); background: #f9fdfd; }
+        
+        .btn-analyze {
+            background: var(--primary);
+            color: white;
+            padding: 20px 60px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            display: flex; align-items: center; justify-content: center; gap: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <div class="upload-header">
+            <h1>Upload Dental Images</h1>
+            <p>Each row shows an example reference photo on the left. Match the angle and upload your own photo on the right.</p>
+        </div>
+
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <!-- Upload Row 1 -->
+            <div class="upload-card">
+                <div class="example-side">
+                    <div class="tag">EXAMPLE</div>
+                    <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=800&q=80" alt="Teeth Example">
+                    <div class="area-label">Full Frontal View</div>
+                </div>
+                <div class="upload-side">
+                    <div class="upload-box" onclick="document.getElementById('file-input').click()">
+                        <div style="font-size: 2rem;">👤</div>
+                        <p style="margin: 10px 0 5px; font-weight: 800;">Upload photo</p>
+                        <p style="margin: 0; font-size: 0.8rem; color: #b2bec3;">Click or drag & drop</p>
+                    </div>
+                    <input type="file" id="file-input" name="file" style="display: none;" onchange="this.form.submit()">
+                </div>
+            </div>
+
+            <div style="background: #e0f2f1; padding: 20px; border-radius: 15px; text-align: left; display: flex; gap: 15px; margin-bottom: 30px;">
+                <span style="font-size: 1.2rem;">ℹ️</span>
+                <p style="margin: 0; font-size: 0.9rem; color: #00796b;">Upload at least one image. You can upload up to 5 oral areas. Only JPG/JPEG format accepted.</p>
+            </div>
+
+            <button type="submit" class="btn-analyze">
+                <span>⚙️</span> Analyze Images
+            </button>
+        </form>
+    </div>
+</body>
+</html>

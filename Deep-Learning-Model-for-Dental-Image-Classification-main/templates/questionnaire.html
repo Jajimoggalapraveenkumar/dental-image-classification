@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Questionnaire - DentalPilot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body { background: #f4fbf9; margin: 0; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+        .onboarding-container { max-width: 800px; margin: 30px auto; padding: 0 20px; }
+
+        .stepper { display: flex; justify-content: space-between; margin-bottom: 40px; position: relative; }
+        .stepper::after { content: ''; position: absolute; top: 18px; left: 0; right: 0; height: 2px; background: #e0f2f1; z-index: 1; }
+        .step {
+            width: 36px; height: 36px; background: white; border: 2px solid #e0f2f1;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 800; color: #636e72; z-index: 2; transition: 0.3s;
+        }
+        .step.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .step.completed { background: #00bfa5; color: white; border-color: #00bfa5; }
+        
+        .form-section { display: none; }
+        .form-section.active { display: block; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .q-card { background: white; border-radius: 25px; padding: 40px; box-shadow: 0 10px 30px rgba(0, 191, 165, 0.1); }
+        .q-header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+        .q-header h3 { margin: 0; font-size: 1.4rem; }
+        .q-header p { margin: 0; color: #636e72; font-size: 0.9rem; }
+        
+        .q-text { font-size: 1rem; color: #2d3436; margin-bottom: 15px; font-weight: 700; margin-top: 20px; }
+        
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .option-item {
+            border: 2px solid #f0f7f7; padding: 12px 20px; border-radius: 10px;
+            cursor: pointer; font-weight: 600; transition: 0.2s; text-align: center; font-size: 0.9rem;
+        }
+        .option-item:hover { border-color: var(--primary); background: #f9fdfd; }
+        .option-item.selected { border-color: var(--primary); background: #e0f2f1; color: var(--primary); }
+
+        .textarea-custom {
+            width: 100%; height: 80px; border: 2px solid #f0f7f7; border-radius: 10px;
+            padding: 15px; font-family: 'Outfit'; resize: none; margin-top: 10px;
+        }
+
+        .nav-btns { display: flex; justify-content: space-between; margin-top: 40px; }
+        .btn-nav {
+            padding: 12px 35px; border-radius: 10px; font-weight: 800; cursor: pointer;
+            display: flex; align-items: center; gap: 10px; transition: 0.3s; border: none; font-family: 'Outfit';
+        }
+        .btn-back { background: white; color: #00796b; border: 2px solid #e0f2f1; }
+        .btn-continue { background: var(--primary); color: white; min-width: 150px; justify-content: center; }
+    </style>
+</head>
+<body>
+    <div class="onboarding-container">
+        <div class="stepper">
+            <div class="step active" id="s1">1</div>
+            <div class="step" id="s2">2</div>
+            <div class="step" id="s3">3</div>
+            <div class="step" id="s4">4</div>
+            <div class="step" id="s5">5</div>
+        </div>
+
+        <div class="q-card">
+            <div id="step-content">
+                <!-- Step 1: Basic Info -->
+                <div class="form-section active" id="step1">
+                    <div class="q-header">
+                        <span style="font-size: 1.5rem;">🦷</span>
+                        <div><h3>Basic Info</h3><p>Tell us about yourself</p></div>
+                    </div>
+                    <p class="q-text">Age Group</p>
+                    <div class="options-grid">
+                        <div class="option-item" onclick="selectOption(this)">Under 18</div>
+                        <div class="option-item" onclick="selectOption(this)">18–25</div>
+                        <div class="option-item" onclick="selectOption(this)">25–35</div>
+                        <div class="option-item" onclick="selectOption(this)">35–45</div>
+                        <div class="option-item" onclick="selectOption(this)">45+</div>
+                    </div>
+                    <p class="q-text">Sex</p>
+                    <div class="options-grid">
+                        <div class="option-item" onclick="selectOption(this)">Male</div>
+                        <div class="option-item" onclick="selectOption(this)">Female</div>
+                        <div class="option-item" onclick="selectOption(this)">Other</div>
+                    </div>
+                    <p class="q-text">Oral Condition Type</p>
+                    <div class="options-grid">
+                        <div class="option-item" onclick="selectOption(this)">Sensitive</div>
+                        <div class="option-item" onclick="selectOption(this)">Normal</div>
+                        <div class="option-item" onclick="selectOption(this)">Dry mouth</div>
+                        <div class="option-item" onclick="selectOption(this)">Gum issues</div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Dental Details (Matched to your 5 Classes) -->
+                <div class="form-section" id="step2">
+                    <div class="q-header">
+                        <span style="font-size: 1.5rem;">🔍</span>
+                        <div><h3>Dental Concerns</h3><p>Select issues related to your scan</p></div>
+                    </div>
+                    <p class="q-text">Which of these specific issues do you notice? (Select all)</p>
+                    <div class="options-grid">
+                        <div class="option-item" onclick="toggleOption(this)">Cavities / Decay (Caries)</div>
+                        <div class="option-item" onclick="toggleOption(this)">Tartar / Plaque (Calculus)</div>
+                        <div class="option-item" onclick="toggleOption(this)">Mouth Sores (Ulcer)</div>
+                        <div class="option-item" onclick="toggleOption(this)">Missing Teeth (Hypodontia)</div>
+                        <div class="option-item" onclick="toggleOption(this)">Stains / Yellowing (Discoloration)</div>
+                    </div>
+                    
+                    <p class="q-text">Where is the main problem located?</p>
+                    <div class="options-grid">
+                        <div class="option-item" onclick="selectOption(this)">Front Teeth</div>
+                        <div class="option-item" onclick="selectOption(this)">Molars / Back Teeth</div>
+                        <div class="option-item" onclick="selectOption(this)">Gums Area</div>
+                        <div class="option-item" onclick="selectOption(this)">Full Mouth</div>
+                    </div>
+                    
+                    <p class="q-text">Briefly describe the pain level (optional)</p>
+                    <textarea class="textarea-custom" placeholder="e.g., sharp pain while eating, constant dull ache..."></textarea>
+                </div>
+
+                <!-- Step 3: Safety First -->
+                <div class="form-section" id="step3">
+                    <div class="q-header">
+                        <span style="font-size: 1.5rem;">🦷</span>
+                        <div><h3>Dental & Medical Info</h3><p>Safety first</p></div>
+                    </div>
+                    <p class="q-text">Do you have any medication allergies?</p>
+                    <div class="options-grid">
+                        <div class="option-item" onclick="selectOption(this)">Yes</div>
+                        <div class="option-item" onclick="selectOption(this)">No</div>
+                    </div>
+                    <p class="q-text">Past reactions to dental treatments</p>
+                    <div class="options-grid">
+                        <div class="option-item" onclick="toggleOption(this)">Pain after treatment</div>
+                        <div class="option-item" onclick="toggleOption(this)">Gum irritation</div>
+                        <div class="option-item" onclick="toggleOption(this)">Sensitivity</div>
+                        <div class="option-item" onclick="toggleOption(this)">Swelling</div>
+                        <div class="option-item" onclick="toggleOption(this)">None</div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Oral Care & Diet -->
+                <div class="form-section" id="step4">
+                    <div class="q-header">
+                        <span style="font-size: 1.5rem;">🦷</span>
+                        <div><h3>Oral Care & Diet</h3><p>Your daily habits</p></div>
+                    </div>
+                    <p class="q-text">Are you currently using dental care products?</p>
+                    <div class="options-grid">
+                        <div class="option-item" onclick="selectOption(this)">Yes</div>
+                        <div class="option-item" onclick="selectOption(this)">No</div>
+                    </div>
+                    <p class="q-text">Do you consume sugary foods or drinks?</p>
+                    <div class="options-grid">
+                        <div class="option-item" onclick="selectOption(this)">Yes</div>
+                        <div class="option-item" onclick="selectOption(this)">No</div>
+                    </div>
+                    <p class="q-text">Brushing frequency</p>
+                    <div class="options-grid">
+                        <div class="option-item" onclick="selectOption(this)">Once a day</div>
+                        <div class="option-item" onclick="selectOption(this)">Twice a day</div>
+                        <div class="option-item" onclick="selectOption(this)">Occasionally</div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Lifestyle -->
+                <div class="form-section" id="step5">
+                    <div class="q-header">
+                        <span style="font-size: 1.5rem;">🦷</span>
+                        <div><h3>Lifestyle</h3><p>Daily habits</p></div>
+                    </div>
+                    <p class="q-text">Stress level</p>
+                    <div class="options-grid">
+                        <div class="option-item" onclick="selectOption(this)">Low</div>
+                        <div class="option-item" onclick="selectOption(this)">Moderate</div>
+                        <div class="option-item" onclick="selectOption(this)">High</div>
+                    </div>
+                    <p class="q-text">Average sleep hours</p>
+                    <div class="options-grid">
+                        <div class="option-item" onclick="selectOption(this)">Less than 4</div>
+                        <div class="option-item" onclick="selectOption(this)">4–6</div>
+                        <div class="option-item" onclick="selectOption(this)">6–8</div>
+                        <div class="option-item" onclick="selectOption(this)">8–10</div>
+                        <div class="option-item" onclick="selectOption(this)">10+</div>
+                    </div>
+                    <p class="q-text">Anything else we should know? (optional)</p>
+                    <textarea class="textarea-custom" placeholder="Any additional information..."></textarea>
+                </div>
+            </div>
+
+            <div class="nav-btns">
+                <button type="button" class="btn-nav btn-back" onclick="prevStep()">Back</button>
+                <button type="button" class="btn-nav btn-continue" id="nextBtn" onclick="nextStep()">Continue <span>→</span></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 5;
+
+        // Single Choice
+        function selectOption(el) {
+            const container = el.parentElement;
+            container.querySelectorAll('.option-item').forEach(item => item.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        // Multi Choice
+        function toggleOption(el) {
+            el.classList.toggle('selected');
+        }
+
+        function updateUI() {
+            document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + currentStep).classList.add('active');
+
+            document.querySelectorAll('.step').forEach((s, idx) => {
+                const stepNum = idx + 1;
+                s.classList.remove('active', 'completed');
+                if (stepNum < currentStep) s.classList.add('completed');
+                else if (stepNum === currentStep) s.classList.add('active');
+            });
+
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.innerHTML = (currentStep === totalSteps) ? 'Complete Questionnaire <span>✓</span>' : 'Continue <span>→</span>';
+            window.scrollTo(0,0);
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) { currentStep++; updateUI(); }
+            else { 
+                // Collect all selected options
+                const answers = {};
+                document.querySelectorAll('.q-text').forEach((q, idx) => {
+                    const section = q.nextElementSibling;
+                    const selected = Array.from(section.querySelectorAll('.option-item.selected')).map(el => el.innerText.trim());
+                    if (selected.length > 0) {
+                        answers[q.innerText.trim()] = selected.join(', ');
+                    }
+                });
+                
+                // Add textarea info
+                document.querySelectorAll('textarea').forEach(t => {
+                    if (t.value) {
+                        const qLabel = t.previousElementSibling.innerText.trim();
+                        answers[qLabel + " - Notes"] = t.value;
+                    }
+                });
+
+                // Submit via hidden form
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/submit_questionnaire';
+                
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'answers';
+                input.value = JSON.stringify(answers);
+                
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) { currentStep--; updateUI(); }
+            else { window.history.back(); }
+        }
+        updateUI();
+    </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - DentalPilot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        :root {
+            --primary: #0d9488;
+            --primary-light: #f0fdfa;
+            --primary-dark: #0f766e;
+            --bg: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+        body { margin: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; display: flex; height: 100vh; overflow: hidden; background: var(--bg); color: var(--text-main); }
+        
+        /* Left Panel - Image/Mascot */
+        .login-left { flex: 1.2; background: linear-gradient(135deg, #ccfbf1 0%, #0d9488 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; color: white; padding: 40px; }
+        .mascot-card { background: white; padding: 16px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); display: inline-block; border: 1px solid rgba(255, 255, 255, 0.25); }
+        .mascot-card img { width: 260px; height: 260px; object-fit: cover; border-radius: 12px; display: block; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.02)); }
+        .left-text h2 { font-size: 1.8rem; margin-top: 24px; font-weight: 700; color: #115e59; letter-spacing: -0.02em; }
+        
+        /* Right Panel - Form */
+        .login-right { flex: 1; background: white; padding: 60px 8%; display: flex; flex-direction: column; justify-content: center; position: relative; }
+        .logo-area { display: flex; align-items: center; gap: 10px; margin-bottom: 40px; position: absolute; top: 40px; left: 8%; }
+        .logo-box { width: 36px; height: 36px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem; }
+        .logo-text { font-weight: 700; font-size: 1.05rem; letter-spacing: -0.02em; color: var(--text-main); }
+
+        .form-header h1 { font-size: 1.8rem; color: var(--text-main); margin: 0; font-weight: 700; letter-spacing: -0.02em; }
+        .form-header p { color: var(--text-muted); margin: 6px 0 30px; font-size: 0.85rem; }
+
+        /* User/Doctor Toggle */
+        .role-switch { background: #f8fafc; padding: 4px; border-radius: 10px; display: flex; margin-bottom: 24px; border: 1px solid var(--border-color); }
+        .role-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: all 0.2s; background: transparent; color: var(--text-muted); }
+        .role-btn.active { background: var(--primary); color: white; box-shadow: 0 2px 6px rgba(13, 148, 136, 0.15); }
+
+        .input-group { margin-bottom: 18px; }
+        .input-group label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+        .input-wrapper { position: relative; }
+        .input-wrapper input { width: 100%; padding: 12px 14px 12px 42px; border: 1px solid var(--border-color); border-radius: 10px; background: #f8fafc; font-size: 0.9rem; box-sizing: border-box; font-family: inherit; transition: all 0.2s; outline: none; }
+        .input-wrapper input:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.08); }
+        .icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); opacity: 0.5; font-size: 0.95rem; }
+
+        .btn-login { background: var(--primary); color: white; border: none; width: 100%; padding: 14px; border-radius: 10px; font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 16px; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.15); transition: all 0.2s; }
+        .btn-login:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(13, 148, 136, 0.25); }
+
+        .error-msg { background: #fef2f2; color: #ef4444; padding: 10px; border-radius: 8px; margin-bottom: 16px; font-size: 0.8rem; text-align: center; border: 1px solid #fee2e2; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="login-left">
+        <div class="mascot-card">
+            <img src="{{ url_for('static', filename='media/chibi_doctor.png') }}" alt="Chibi Doctor">
+        </div>
+        <div class="left-text" style="text-align: center;">
+            <h2>Track. Scan. Smile.</h2>
+            <p style="opacity: 0.9; font-size: 0.95rem; color: #115e59; margin-top: 6px;">Your personalized AI dental companion.</p>
+        </div>
+    </div>
+
+    <div class="login-right">
+        <div class="logo-area">
+            <div class="logo-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C9.5 2 7 3.5 6 5.5c-.5.9-.5 2-.5 3 0 2.5 1.5 5 2.5 6 1 1 1.5 3 1.5 4.5A2.5 2.5 0 0 0 12 21.5a2.5 2.5 0 0 0 2.5-2.5c0-1.5.5-3.5 1.5-4.5 1-1 2.5-3.5 2.5-6 0-1 0-2.1-.5-3-1-2-3.5-3.5-6-3.5z"/></svg>
+            </div>
+            <div class="logo-text">DentalPilot</div>
+        </div>
+
+        <div class="form-header">
+            <h1>Welcome back!</h1>
+            <p>Enter your details to access your portal</p>
+        </div>
+
+        {% if msg %}
+        <div class="error-msg">⚠️ {{ msg }}</div>
+        {% endif %}
+
+        <div class="role-switch">
+            <button type="button" class="role-btn active" onclick="setRole(this, 'user')">User Login</button>
+            <button type="button" class="role-btn" onclick="setRole(this, 'doctor')">Doctor Login</button>
+        </div>
+
+        <form action="/validate" method="post" id="loginForm" autocomplete="off">
+            <div class="input-group">
+                <label id="userLabel">Username</label>
+                <div class="input-wrapper">
+                    <span class="icon">👤</span>
+                    <input type="text" name="uname" id="usernameInput" placeholder="e.g. admin" autocomplete="off" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <span class="icon">🔒</span>
+                    <input type="password" name="upass" placeholder="••••••••" autocomplete="new-password" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login">Sign In →</button>
+        </form>
+
+        <p id="regText" style="text-align: center; margin-top: 24px; font-size: 0.85rem; color: var(--text-muted);">
+            Don't have an account? <a href="/register" style="color: var(--primary); font-weight: 700; text-decoration: none;">Create one here</a>
+        </p>
+    </div>
+
+    <script>
+        function setRole(btn, role) {
+            // Update buttons
+            document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Update placeholders
+            const input = document.getElementById('usernameInput');
+            const regText = document.getElementById('regText');
+            
+            if(role === 'doctor') {
+                input.placeholder = "e.g. doctor";
+                regText.style.display = 'none'; // Doctors don't self-register
+            } else {
+                input.placeholder = "e.g. admin";
+                regText.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

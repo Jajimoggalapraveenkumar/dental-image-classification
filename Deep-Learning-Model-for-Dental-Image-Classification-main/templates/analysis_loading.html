@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysing... - DentalPilot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="loading-wrapper">
+        <div class="spinner"></div>
+        <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Analysing your Dental Health</h1>
+        <p style="color: var(--text-light); font-size: 1.1rem; max-width: 500px; margin: 0 auto;">Our Deep Learning model is currently evaluating your photos for Calculus, Caries, Hypodontia, and more...</p>
+        
+        <div style="margin-top: 50px; display: flex; flex-direction: column; gap: 10px; align-items: center;">
+            <p style="font-weight: 600; color: var(--primary);" id="statusText">Scanning Upper Left Quad...</p>
+            <div style="width: 300px; height: 6px; background: #eee; border-radius: 3px; overflow: hidden;">
+                <div id="progressBar" style="width: 10%; height: 100%; background: var(--primary); transition: 0.5s;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tasks = [
+            "Scanning Upper Left Quad...",
+            "Analyzing Crown surfaces...",
+            "Checking for Caries...",
+            "Evaluating Gum integrity...",
+            "Finalizing Result Profile..."
+        ];
+        let i = 0;
+        const statusText = document.getElementById("statusText");
+        const progressBar = document.getElementById("progressBar");
+
+        const interval = setInterval(() => {
+            if (i < tasks.length) {
+                statusText.innerText = tasks[i];
+                progressBar.style.width = ((i + 1) * 20) + "%";
+                i++;
+            } else {
+                clearInterval(interval);
+                window.location.href = "/onboarding-result";
+            }
+        }, 800);
+    </script>
+</body>
+</html>
