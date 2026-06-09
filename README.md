@@ -1,95 +1,57 @@
-# Dental Image Classification & Diagnosis Web Application
+# Dental Image Classification Web Application
 
-A Deep Learning-based web application designed to classify dental images and detect various dental issues. The application is built using **Flask** for the backend and utilizes a trained **InceptionV3** model (`model_inception.h5`) to perform image classification.
+This is a web-based project developed to classify dental images and identify common dental issues using deep learning. The application is built with Python and Flask for the backend, and it uses a trained InceptionV3 model (model_inception.h5) for image classification.
 
-## 🦷 Supported Dental Conditions
-The model classifies dental images into five distinct categories:
-1. **Calculus (Tartar & Plaque)** - Detects hardened plaque build-up.
-2. **Caries (Cavities)** - Identifies tooth decay and cavities.
-3. **Hypodontia (Missing Teeth)** - Identifies missing teeth or developmental anomalies.
-4. **Mouth Ulcer** - Detects ulcers or sores in the oral cavity.
-5. **Tooth Discoloration** - Identifies stains and color changes on teeth.
+## Dental Conditions Detected by the App
+The model is trained to classify images into one of these 5 classes:
+1. Calculus (Plaque build-up)
+2. Caries (Tooth cavities)
+3. Hypodontia (Missing teeth)
+4. Mouth Ulcer (Sores)
+5. Tooth Discoloration (Stains on teeth)
 
----
+## Features Included
+* User Registration & Login: Users can sign up and log in. User details are stored in a local SQLite database.
+* User Questionnaire: A questionnaire where users answer questions about their daily oral hygiene habits (like brushing frequency, current symptoms, etc.).
+* Image Upload and Prediction: Users can upload a photo of their teeth. The deep learning model analyzes it and displays the classified condition.
+* Treatment Plans: Shows a basic step-by-step treatment recommendation based on the detected condition.
+* Doctor Dashboard: A dedicated page for doctors to log in and view the user scan history, login history, and user contact messages.
 
-## 🚀 Key Features
-* **User Authentication**: Secure user registration and login system with SQLite database storage.
-* **Onboarding Questionnaire**: Collects user dental habits (brushing frequency, issues, etc.) for personalized tracking.
-* **Deep Learning Analysis**: Upload a dental image and get instantaneous predictions with confidence scores.
-* **Interactive Treatment Plans**: Generates customized steps, descriptions, and advice based on the detected condition.
-* **Doctor Dashboard**: Dedicated interface for dental professionals to review patient scan histories, user logins, and contact queries.
-* **Deployment Ready**: Optimized configuration (`vercel.json` and temporary folder handling) for cloud deployment on platforms like Vercel.
+## Technologies Used
+* Frontend: HTML5, CSS
+* Backend: Python, Flask
+* Database: SQLite3
+* Deep Learning: TensorFlow, Keras (InceptionV3 model)
+* Deployment: Vercel
 
----
+## How to Set Up and Run Locally
 
-## 🛠️ Technology Stack
-* **Backend**: Python, Flask
-* **Machine Learning**: TensorFlow, Keras (InceptionV3 Model)
-* **Database**: SQLite3
-* **Frontend**: HTML5, CSS3, Vanilla JS
-* **Deployment**: Vercel/Gunicorn
+### Prerequisites
+You need Python installed on your computer.
 
----
+### Steps:
+1. Clone or download this project folder.
+2. Open your terminal in the project directory.
+3. Install the required python libraries:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Initialize the database:
+   ```bash
+   python init_db.py
+   ```
+5. Run the server:
+   ```bash
+   python app.py
+   ```
+   *Note: You can also start the application by running the `run_app.bat` or `Run_Dental_App.bat` batch files.*
+6. Open your web browser and go to: `http://127.0.0.1:5000`
 
-## ⚙️ How to Setup and Run Locally
-
-### 1. Prerequisites
-Ensure you have **Python 3.8+** installed on your system.
-
-### 2. Clone the Repository
-```bash
-git clone https://github.com/Jajimoggalapraveenkumar/dental-image-classification.git
-cd dental-image-classification
-```
-
-### 3. Install Dependencies
-Install the required packages using pip:
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Database Initialization
-Before running the app, initialize the database by running:
-```bash
-python init_db.py
-```
-
-### 5. Run the Application
-Start the Flask development server:
-```bash
-python app.py
-```
-Or use the provided batch scripts:
-* Double-click on `run_app.bat` or `Run_Dental_App.bat` to launch the application.
-
-Once running, open your web browser and navigate to:
-👉 `http://127.0.0.1:5000`
-
----
-
-## 📁 Project Directory Structure
-```text
-├── Tooth dataset/          # Dataset folders for training images
-│   ├── Calculus/
-│   ├── caries/
-│   ├── hypodontia/
-│   ├── Mouth Ulcer/
-│   └── Tooth Discoloration/
-├── static/                 # CSS, JavaScript, and uploaded images
-│   ├── css/
-│   └── uploads/
-├── templates/              # HTML frontend pages
-├── app.py                  # Main Flask application
-├── init_db.py              # Script to initialize SQLite database
-├── train.py                # Deep learning training script
-├── requirements.txt        # Project dependencies
-├── vercel.json             # Vercel deployment configuration
-└── README.md               # Project documentation
-```
-
----
-
-## 🔒 Default Admin & Doctor Credentials
-For evaluation and dashboard access:
-* **Admin Dashboard**: `Username: admin` | `Password: 123`
-* **Doctor Dashboard**: `Username: doctor` | `Password: doctor123`
+## Default Access Credentials
+To test the Doctor dashboard or Admin view:
+* Admin:
+  * Username: admin
+  * Password: 123
+* Doctor:
+  * Username: doctor
+  * Password: doctor123
